@@ -1,0 +1,20 @@
+{
+    "name": "socialiteproviders/vkontakte",
+    "description": "VKontakte OAuth2 Provider for Laravel Socialite",
+    "license": "MIT",
+    "authors": [{
+        "name": "DraperStudio",
+        "email": "hello@draperstud.io"
+    }],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "~5.0",
+        "laravel/socialite": "~2.0",
+        "socialiteproviders/manager": "0.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "SocialiteProviders\\VKontakte\\": "src/"
+        }
+    }
+}
