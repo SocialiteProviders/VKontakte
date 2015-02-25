@@ -12,7 +12,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://oauth.vk.com/authorize', $state);
+        return $this->buildAuthUrlFromBase(
+            'https://oauth.vk.com/authorize', $state
+        );
     }
 
     /**
@@ -41,11 +43,9 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id'       => $user['uid'],
-            'nickname' => $user['screen_name'],
-            'name'     => $user['first_name'].' '.$user['last_name'],
-            'email'    => null,
-            'avatar'   => $user['photo'],
+            'id' => $user['uid'], 'nickname' => $user['screen_name'],
+            'name' => $user['first_name'].' '.$user['last_name'],
+            'email' => null, 'avatar' => $user['photo'],
         ]);
     }
 
@@ -54,7 +54,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenFields($code)
     {
-        return array_merge(parent::getTokenFields($code), ['grant_type' => 'authorization_code']);
+        return array_merge(parent::getTokenFields($code), [
+            'grant_type' => 'authorization_code',
+        ]);
     }
 
     /**
