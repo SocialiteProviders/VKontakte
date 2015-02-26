@@ -10,6 +10,11 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
+    protected $scopes = ['email'];
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getAuthUrl($state)
     {
         return $this->buildAuthUrlFromBase(
@@ -34,7 +39,11 @@ class Provider extends AbstractProvider implements ProviderInterface
             'https://api.vk.com/method/users.get?user_ids='.$token['user_id'].'&fields=uid,first_name,last_name,screen_name,photo'
         );
 
-        return json_decode($response->getBody(), true)['response'][0];
+        $response = json_decode($response->getBody(), true)['response'][0];
+
+        return array_merge($response, [
+            'email' => $token['email']
+        ]);
     }
 
     /**
@@ -45,7 +54,7 @@ class Provider extends AbstractProvider implements ProviderInterface
         return (new User())->setRaw($user)->map([
             'id' => $user['uid'], 'nickname' => $user['screen_name'],
             'name' => $user['first_name'].' '.$user['last_name'],
-            'email' => null, 'avatar' => $user['photo'],
+            'email' => array_get($user, 'email'), 'avatar' => $user['photo'],
         ]);
     }
 
