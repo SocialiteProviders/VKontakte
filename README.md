@@ -1,5 +1,11 @@
 # VKontakte OAuth2 Provider for Laravel Socialite
 
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/SocialiteProviders/VKontakte.svg?style=flat-square)](https://scrutinizer-ci.com/g/SocialiteProviders/VKontakte/?branch=master)
+[![Latest Stable Version](https://img.shields.io/packagist/v/socialiteproviders/vkontakte.svg?style=flat-square)](https://packagist.org/packages/socialiteproviders/vkontakte)
+[![Total Downloads](https://img.shields.io/packagist/dt/socialiteproviders/vkontakte.svg?style=flat-square)](https://packagist.org/packages/socialiteproviders/vkontakte)
+[![Latest Unstable Version](https://img.shields.io/packagist/vpre/socialiteproviders/vkontakte.svg?style=flat-square)](https://packagist.org/packages/socialiteproviders/vkontakte)
+[![License](https://img.shields.io/packagist/l/socialiteproviders/vkontakte.svg?style=flat-square)](https://packagist.org/packages/socialiteproviders/vkontakte)
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Contents
