@@ -42,7 +42,7 @@ class Provider extends AbstractProvider implements ProviderInterface
         $response = json_decode($response->getBody(), true)['response'][0];
 
         return array_merge($response, [
-            'email' => $token['email']
+            'email' => $token['email'],
         ]);
     }
 
