@@ -2,10 +2,10 @@
     "name": "socialiteproviders/vkontakte",
     "description": "VKontakte OAuth2 Provider for Laravel Socialite",
     "license": "MIT",
-    "authors": {
+    "authors": [{
         "name": "DraperStudio",
         "email": "hello@draperstud.io"
-    },
+    }],
     "require": {
         "php": ">=5.5.0",
         "socialiteproviders/manager": "~1.0"
