@@ -1,4 +1,5 @@
 <?php
+
 namespace SocialiteProviders\VKontakte;
 
 use SocialiteProviders\Manager\SocialiteWasCalled;

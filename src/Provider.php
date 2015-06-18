@@ -1,4 +1,5 @@
 <?php
+
 namespace SocialiteProviders\VKontakte;
 
 use Laravel\Socialite\Two\AbstractProvider;
@@ -39,7 +40,7 @@ class Provider extends AbstractProvider implements ProviderInterface
             'https://api.vk.com/method/users.get?user_ids='.$token['user_id'].'&fields=uid,first_name,last_name,screen_name,photo'
         );
 
-        $response = json_decode($response->getBody(), true)['response'][0];
+        $response = json_decode($response->getBody()->getContents(), true)['response'][0];
 
         return array_merge($response, [
             'email' => array_get($token, 'email'),
