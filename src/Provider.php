@@ -83,7 +83,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     public function user()
     {
         if ($this->hasInvalidState()) {
-            throw new InvalidStateException;
+            throw new InvalidStateException();
         }
 
         $user = $this->mapUserToObject($this->getUserByToken(
