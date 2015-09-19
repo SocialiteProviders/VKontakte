@@ -76,4 +76,20 @@ class Provider extends AbstractProvider implements ProviderInterface
     {
         return json_decode($body, true);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function user()
+    {
+        if ($this->hasInvalidState()) {
+            throw new InvalidStateException;
+        }
+
+        $user = $this->mapUserToObject($this->getUserByToken(
+            $token = $this->getAccessToken($this->getCode())
+        ));
+
+        return $user->setToken(array_get($token, 'access_token'));
+    }
 }
