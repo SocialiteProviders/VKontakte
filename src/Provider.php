@@ -8,6 +8,9 @@ use Laravel\Socialite\Two\User;
 
 class Provider extends AbstractProvider implements ProviderInterface
 {
+
+    protected $fields = ['first_name', 'last_name', 'email', 'sex'];
+
     /**
      * {@inheritdoc}
      */
@@ -37,7 +40,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function getUserByToken($token)
     {
         $response = $this->getHttpClient()->get(
-            'https://api.vk.com/method/users.get?user_ids='.$token['user_id'].'&fields=uid,first_name,last_name,screen_name,photo'
+            'https://api.vk.com/method/users.get?user_ids='.$token['user_id'].'&fields='.implode(',', $this->fields)
         );
 
         $response = json_decode($response->getBody()->getContents(), true)['response'][0];
@@ -91,5 +94,18 @@ class Provider extends AbstractProvider implements ProviderInterface
         ));
 
         return $user->setToken(array_get($token, 'access_token'));
+    }
+
+    /**
+     * Set the user fields to request from Vkontakte.
+     *
+     * @param  array  $fields
+     * @return $this
+     */
+    public function fields(array $fields)
+    {
+        $this->fields = $fields;
+
+        return $this;
     }
 }
