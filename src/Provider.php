@@ -9,7 +9,7 @@ use Laravel\Socialite\Two\User;
 class Provider extends AbstractProvider implements ProviderInterface
 {
 
-    protected $fields = ['first_name', 'last_name', 'email', 'sex'];
+    protected $fields = ['uid', 'first_name', 'last_name', 'screen_name', 'photo'];
 
     /**
      * {@inheritdoc}
