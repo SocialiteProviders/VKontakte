@@ -2,9 +2,10 @@
 
 namespace SocialiteProviders\VKontakte;
 
+use Laravel\Socialite\Two\User;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
-use Laravel\Socialite\Two\User;
+use Laravel\Socialite\Two\InvalidStateException;
 
 class Provider extends AbstractProvider implements ProviderInterface
 {
