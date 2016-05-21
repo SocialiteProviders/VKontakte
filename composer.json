@@ -1,10 +1,10 @@
 {
-    "name": "socialiteproviders/vkontakte",
-    "description": "VKontakte OAuth2 Provider for Laravel Socialite",
+    "name": "elblasto/vkontakte",
+    "description": "fork from VKontakte OAuth2 Provider for Laravel Socialite",
     "license": "MIT",
     "authors": [{
-        "name": "DraperStudio",
-        "email": "hello@draperstud.io"
+        "name": "ilyachimytov",
+        "email": "ilyachimytov@gmail.com"
     }],
     "require": {
         "php": "^5.6 || ^7.0",
