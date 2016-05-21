@@ -17,7 +17,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    protected $fields = ['name','screen_name','photo'];
+    protected $fields = ['name', 'screen_name', 'photo'];
 
     protected $scopes = ['email'];
 
