@@ -17,6 +17,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
+    protected $fields = ['name','screen_name','photo'];
+
     protected $scopes = ['email'];
 
     /**
@@ -43,7 +45,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function getUserByToken($token)
     {
         $response = $this->getHttpClient()->get(
-            'https://api.vk.com/method/users.get?user_ids='.$token['user_id'].'&fields=uid,first_name,last_name,screen_name,photo'
+            'https://api.vk.com/method/users.get?user_ids='.$token['user_id'].'&fields='.implode(',', $this->fields)
         );
 
         $response = json_decode($response->getBody()->getContents(), true)['response'][0];
