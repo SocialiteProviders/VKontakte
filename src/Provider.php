@@ -93,7 +93,7 @@ class Provider extends AbstractProvider implements ProviderInterface
         }
 
         $user = $this->mapUserToObject($this->getUserByToken(
-            $token = $this->getAccessToken($this->getCode())
+            $token = $this->getAccessTokenResponse($this->getCode())
         ));
 
         return $user->setToken(array_get($token, 'access_token'));
