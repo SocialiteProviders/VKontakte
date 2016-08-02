@@ -9,7 +9,6 @@ use SocialiteProviders\Manager\OAuth2\User;
 
 class Provider extends AbstractProvider implements ProviderInterface
 {
-
     protected $fields = ['uid', 'first_name', 'last_name', 'screen_name', 'photo'];
 
     /**
@@ -105,7 +104,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * Set the user fields to request from Vkontakte.
      *
-     * @param  array  $fields
+     * @param array $fields
+     *
      * @return $this
      */
     public function fields(array $fields)
