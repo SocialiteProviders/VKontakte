@@ -9,6 +9,8 @@ use SocialiteProviders\Manager\OAuth2\User;
 
 class Provider extends AbstractProvider implements ProviderInterface
 {
+    protected $fields = ['uid', 'first_name', 'last_name', 'screen_name', 'photo'];
+
     /**
      * Unique Provider Identifier.
      */
@@ -45,7 +47,7 @@ class Provider extends AbstractProvider implements ProviderInterface
         $lang = $this->getConfig('lang');
         $lang = $lang ? '&lang='.$lang : '';
         $response = $this->getHttpClient()->get(
-            'https://api.vk.com/method/users.get?user_ids='.$token['user_id'].'&fields=uid,first_name,last_name,screen_name,photo'.$lang
+            'https://api.vk.com/method/users.get?user_ids='.$token['user_id'].'&fields='.implode(',', $this->fields).$lang
         );
 
         $response = json_decode($response->getBody()->getContents(), true)['response'][0];
@@ -61,9 +63,9 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id' => $user['uid'], 'nickname' => $user['screen_name'],
-            'name' => $user['first_name'].' '.$user['last_name'],
-            'email' => array_get($user, 'email'), 'avatar' => $user['photo'],
+            'id' => array_get($user, 'uid'), 'nickname' => array_get($user, 'screen_name'),
+            'name' => trim(array_get($user, 'first_name').' '.array_get($user, 'last_name')),
+            'email' => array_get($user, 'email'), 'avatar' => array_get($user, 'photo'),
         ]);
     }
 
@@ -99,5 +101,19 @@ class Provider extends AbstractProvider implements ProviderInterface
         ));
 
         return $user->setToken(array_get($token, 'access_token'));
+    }
+
+    /**
+     * Set the user fields to request from Vkontakte.
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
+    public function fields(array $fields)
+    {
+        $this->fields = $fields;
+
+        return $this;
     }
 }
