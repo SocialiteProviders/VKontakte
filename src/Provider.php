@@ -116,4 +116,12 @@ class Provider extends AbstractProvider implements ProviderInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function additionalConfigKeys()
+    {
+        return ['lang'];
+    }
 }
