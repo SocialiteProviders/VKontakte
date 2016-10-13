@@ -9,7 +9,7 @@ use SocialiteProviders\Manager\OAuth2\User;
 
 class Provider extends AbstractProvider implements ProviderInterface
 {
-    protected $fields = ['uid', 'first_name', 'last_name', 'screen_name', 'photo'];
+    protected $fields = ['uid', 'first_name', 'last_name', 'screen_name', 'photo_max_orig'];
 
     /**
      * Unique Provider Identifier.
@@ -46,15 +46,18 @@ class Provider extends AbstractProvider implements ProviderInterface
     {
         $lang = $this->getConfig('lang');
         $lang = $lang ? '&lang='.$lang : '';
+        $accessToken = is_array($token) ? array_get($token, 'access_token') : $token;   
         $response = $this->getHttpClient()->get(
-            'https://api.vk.com/method/users.get?user_ids='.$token['user_id'].'&fields='.implode(',', $this->fields).$lang
+            'https://api.vk.com/method/users.get?access_token='.$accessToken.'&fields='.implode(',', $this->fields).$lang
         );
 
         $response = json_decode($response->getBody()->getContents(), true)['response'][0];
-
-        return array_merge($response, [
-            'email' => array_get($token, 'email'),
-        ]);
+        if(is_array($token)) {
+            $response = array_merge($response, ['email' => array_get($token, 'email')]);
+        }
+        
+        unset($accessToken, $lang);
+        return $response;
     }
 
     /**
@@ -63,9 +66,11 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id' => array_get($user, 'uid'), 'nickname' => array_get($user, 'screen_name'),
+            'id' => array_get($user, 'uid'), 
+            'nickname' => array_get($user, 'screen_name'),
             'name' => trim(array_get($user, 'first_name').' '.array_get($user, 'last_name')),
-            'email' => array_get($user, 'email'), 'avatar' => array_get($user, 'photo'),
+            'email' => array_get($user, 'email'), 
+            'avatar' => array_get($user, 'photo_max_orig'),
         ]);
     }
 
