@@ -1,5 +1,5 @@
 {
-    "name": "socialiteproviders/vkontakte",
+    "name": "bassx1/vkontakte",
     "description": "VKontakte OAuth2 Provider for Laravel Socialite",
     "license": "MIT",
     "authors": [{
@@ -8,7 +8,7 @@
     }],
     "require": {
         "php": "^5.6 || ^7.0",
-        "socialiteproviders/manager": "~2.0 || ~3.0"
+        "socialiteproviders/manager": "~2.0"
     },
     "autoload": {
         "psr-4": {
