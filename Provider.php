@@ -20,6 +20,13 @@ class Provider extends AbstractProvider implements ProviderInterface
      * {@inheritdoc}
      */
     protected $scopes = ['email'];
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected $parameters = [
+    	'v' => '5.69',
+    ];
 
     /**
      * {@inheritdoc}
