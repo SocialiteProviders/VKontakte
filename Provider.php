@@ -9,17 +9,38 @@ use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 
 class Provider extends AbstractProvider implements ProviderInterface
 {
-    protected $fields = ['uid', 'email', 'first_name', 'last_name', 'screen_name', 'photo'];
-
     /**
      * Unique Provider Identifier.
      */
     const IDENTIFIER = 'VKONTAKTE';
+    const VERSION = '5.71';
 
+    protected $fields = ['uid', 'email', 'first_name', 'last_name', 'screen_name', 'photo'];
     /**
      * {@inheritdoc}
      */
     protected $scopes = ['email'];
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function additionalConfigKeys()
+    {
+        return ['lang'];
+    }
+
+    /**
+     * Set the user fields to request from Vkontakte.
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
+    public function fields(array $fields)
+    {
+        $this->fields = $fields;
+        return $this;
+    }
 
     /**
      * {@inheritdoc}
@@ -44,14 +65,17 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $lang = $this->getConfig('lang');
-        $lang = $lang ? '&language='.$lang : '';
-        $response = $this->getHttpClient()->get(
-            'https://api.vk.com/method/users.get?access_token='.$token.'&fields='.implode(',', $this->fields).$lang
-        );
+        $params = http_build_query([
+            'access_token' => $token,
+            'fields' => implode(',', $this->fields),
+            'language' => $this->getConfig('lang', 'en'),
+            'v' => self::VERSION
+        ]);
+
+        $response = $this->getHttpClient()->get('https://api.vk.com/method/users.get?' . $params);
 
         $response = json_decode($response->getBody()->getContents(), true)['response'][0];
-
+        
         return $response;
     }
 
@@ -63,7 +87,7 @@ class Provider extends AbstractProvider implements ProviderInterface
         return (new User())->setRaw($user)->map([
             'id' => Arr::get($user, 'uid'),
             'nickname' => Arr::get($user, 'screen_name'),
-            'name' => trim(Arr::get($user, 'first_name').' '.Arr::get($user, 'last_name')),
+            'name' => trim(Arr::get($user, 'first_name') . ' ' . Arr::get($user, 'last_name')),
             'email' => Arr::get($user, 'email'),
             'avatar' => Arr::get($user, 'photo'),
         ]);
@@ -77,27 +101,5 @@ class Provider extends AbstractProvider implements ProviderInterface
         return array_merge(parent::getTokenFields($code), [
             'grant_type' => 'authorization_code',
         ]);
-    }
-
-    /**
-     * Set the user fields to request from Vkontakte.
-     *
-     * @param array $fields
-     *
-     * @return $this
-     */
-    public function fields(array $fields)
-    {
-        $this->fields = $fields;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function additionalConfigKeys()
-    {
-        return ['lang'];
     }
 }
