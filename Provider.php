@@ -20,6 +20,13 @@ class Provider extends AbstractProvider implements ProviderInterface
      * {@inheritdoc}
      */
     protected $scopes = ['email'];
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected $parameters = [
+    	'v' => '5.69',
+    ];
 
     /**
      * {@inheritdoc}
@@ -47,7 +54,7 @@ class Provider extends AbstractProvider implements ProviderInterface
         $lang = $this->getConfig('lang');
         $lang = $lang ? '&language='.$lang : '';
         $response = $this->getHttpClient()->get(
-            'https://api.vk.com/method/users.get?access_token='.$token.'&fields='.implode(',', $this->fields).$lang
+            'https://api.vk.com/method/users.get?access_token='.$token.'&fields='.implode(',', $this->fields).$lang.'&v=3.0'
         );
 
         $response = json_decode($response->getBody()->getContents(), true)['response'][0];
