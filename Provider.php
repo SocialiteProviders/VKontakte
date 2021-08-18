@@ -68,7 +68,7 @@ class Provider extends AbstractProvider
             'access_token' => $token,
             'fields'       => implode(',', $this->fields),
             'lang'         => $this->getConfig('lang', 'en'),
-            'v'            => self::VERSION,
+            'v'            => $this->getConfig('api_version', self::VERSION),
         ]);
 
         $response = $this->getHttpClient()->get('https://api.vk.com/method/users.get?'.$params);
