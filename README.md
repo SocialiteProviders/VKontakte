@@ -18,7 +18,8 @@ Please see the [Base Installation Guide](https://socialiteproviders.com/usage/),
 'vkontakte' => [    
   'client_id' => env('VKONTAKTE_CLIENT_ID'),  
   'client_secret' => env('VKONTAKTE_CLIENT_SECRET'),  
-  'redirect' => env('VKONTAKTE_REDIRECT_URI') 
+  'redirect' => env('VKONTAKTE_REDIRECT_URI'),
+  'api_version' => env('VKONTAKTE_API_VERSION')
 ],
 ```
 
