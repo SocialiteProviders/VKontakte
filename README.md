@@ -46,6 +46,24 @@ You should now be able to use the provider like you would regularly use Socialit
 return Socialite::driver('vkontakte')->redirect();
 ```
 
+#### Usage with custom api version
+
+```php
+
+$config = new \SocialiteProviders\Manager\Config(
+            config('services.vkontakte.client_id'),
+            config('services.vkontakte.client_secret'),
+            config('services.vkontakte.redirect'),
+            [
+                'api_version' => config('services.vkontakte.api_version'),
+            ]
+        )
+return Socialite::driver('vkontakte')->setConfig($config)->redirect();
+
+// and some other
+$socialite = new Socialite::with('vkontakte')->setConfig($config);
+```
+
 ### Returned User fields
 
 - ``id``
